@@ -9,7 +9,6 @@ install-rabbitmq:
 manage-rabbitmq:
   service.running:
     - name: rabbitmq-server
-    - reload: True
     - enable: True
     - watch:
       - pkg: rabbitmq-server
