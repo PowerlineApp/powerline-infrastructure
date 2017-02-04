@@ -32,6 +32,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.verbose = true
       salt.bootstrap_options = "-P -c /tmp"
     end
+
+    master_config.vm.provision "shell",
+      path: "dev/dev-setup.sh"
+
   end
 
   config.vm.define :minion1 do |minion_config|
@@ -53,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
     minion_config.vm.provision "shell",
-      inline: "cp /vagrant/dev/etc/minion_grains /etc/salt/grains"
+      inline: "ln -s /vagrant/dev/etc/minion_grains /etc/salt/grains"
 
     minion_config.vm.provision "shell",
       inline: "service salt-minion restart"
