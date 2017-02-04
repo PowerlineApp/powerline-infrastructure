@@ -9,7 +9,6 @@ install-supervisor:
 manage-supervisor:
   service.running:
     - name: supervisor
-    - reload: True
     - enable: True
     - watch:
       - pkg: supervisor
@@ -51,7 +50,6 @@ config-subscriptions:
 supervisor-service-{{ q }}:
   supervisord.running:
     - name: {{ project }}_{{ q }}
-    - update: True
-    - watch:
+    - onchanges:
       - file: /etc/supervisor/conf.d/{{ project }}_{{ q }}.conf
 {% endfor %}
