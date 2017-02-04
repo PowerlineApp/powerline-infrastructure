@@ -50,7 +50,7 @@ get-vagrant-deploy-{{ cert }}:
 get-deploy-{{ cert }}:
   file.managed:
     - name: /srv/certs/{{ project }}-{{ cert }}
-    - source: s3://{{ salt['pillar.get']('civix:deploy-bucket') }}/{{ env }}/certs/{{ cert }}
+    - source: s3://{{ salt['pillar.get']('civix:deployment-bucket') }}/{{ env }}/certs/{{ cert }}
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644

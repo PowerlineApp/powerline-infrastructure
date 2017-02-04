@@ -2,6 +2,7 @@ civix:
   project: civix
   user: civix
   ppa: ondrej/php5-oldstable
+  deployment-bucket: deployment-data
   deploy:
     absent_files:
       - app/cache
