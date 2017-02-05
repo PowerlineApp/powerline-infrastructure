@@ -1,14 +1,13 @@
-{% set user = salt['pillar.get']('civix:user') %}
-{% set ppa = salt['pillar.get']('civix:ppa') %}
+{% set user = salt['pillar.get']('civix:user') -%}
 
 common-php-pkgs:
   pkgrepo.managed:
-    - ppa: {{ ppa }}
+    - ppa: {{ salt['pillar.get']('civix:php:ppa') }}
   pkg.installed:
     - pkgs:
-    {% for pkg in salt['pillar.get']('civix:php_pkgs') -%}
-      - {{ pkg }}
-    {% endfor %}
+      - php5.6
+      - php5.6-common
+      - php5.6-cli
 
 add-civix-user:
   user.present:
