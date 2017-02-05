@@ -1,15 +1,14 @@
 
 install-php-pkgs:
   pkgrepo.managed:
-    - ppa: ondrej/php5-oldstable
+    - ppa: ondrej/php
   pkg.installed:
     - pkgs:
-      - php5
-      - php5-common
-      - php5-cli
-      - php5-curl
-      - php5-gd
-      - php5-mysql
-      - php5-sqlite
-      - php5-intl
-
+      - php5.6
+      - php5.6-common
+      - php5.6-cli
+      - php5.6-curl
+      - php5.6-gd
+      - php5.6-mysql
+      - php5.6-sqlite3
+      - php5.6-intl
