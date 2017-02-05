@@ -34,9 +34,9 @@ config-vhost:
 # If the env is vagrant, we are building/testing on vagrant. Therefore
 # we pull in the self signed certs that aren't related to powerline
 # domain.
-{% for cert in ["server.crt", "server.key"] %}
-  {% if env == 'vagrant' %}
+{% if env == 'vagrant' %}
 
+  {% for cert in ["server.key", "server.crt"] %}
 get-vagrant-deploy-{{ cert }}:
   file.copy:
     - name: /srv/certs/{{ project }}-{{ cert }}
@@ -44,9 +44,11 @@ get-vagrant-deploy-{{ cert }}:
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644
+  {% endfor %}
 
-  {% else %}
+{% else %}
 
+  {% for cert, hash in salt['pillar.get']('civix:api_certs').items() %}
 get-deploy-{{ cert }}:
   file.managed:
     - name: /srv/certs/{{ project }}-{{ cert }}
@@ -54,10 +56,10 @@ get-deploy-{{ cert }}:
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644
-    - skip_verify: True
+    - source_hash: {{ hash }}
+  {% endfor %}
 
-  {% endif %}
-{% endfor %}
+{% endif %}
 
 remove-default-site:
   file.absent:
