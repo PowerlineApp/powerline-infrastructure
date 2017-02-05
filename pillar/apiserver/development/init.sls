@@ -1,4 +1,4 @@
 civix:
   api_certs:
-    server.crt: 87833921427210fbe25280c7854eb489
-    server.key: 222595d86aa79ec1edff5221eb58fe7c
+    server.crt: cd05ff44b54de9c620b90d630f06c47c
+    server.key: ffc23cf934722e613bfda4c7b2c6e00b
