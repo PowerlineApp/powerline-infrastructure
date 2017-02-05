@@ -1,8 +1,13 @@
 civix:
   project: civix
   user: civix
-  ppa: ondrej/php5-oldstable
   deployment-bucket: deployment-data
+  php:
+    ppa: ondrej/php
+    packages:
+      - php5.6
+      - php5.6-common
+      - php5.6-cli
   deploy:
     absent_files:
       - app/cache

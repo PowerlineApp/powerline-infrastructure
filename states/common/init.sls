@@ -6,9 +6,9 @@ common-php-pkgs:
     - ppa: {{ ppa }}
   pkg.installed:
     - pkgs:
-      - php5
-      - php5-common
-      - php5-cli
+    {% for pkg in salt['pillar.get']('civix:php_pkgs') -%}
+      - {{ pkg }}
+    {% endfor %}
 
 add-civix-user:
   user.present:
