@@ -47,7 +47,6 @@ install-curl:
   pkg.installed:
     - pkgs:
       - curl
-      - python-pip=8.1.1-2
       - git
 
 # install-gitpython:
