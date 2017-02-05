@@ -1,6 +1,6 @@
 {% set project = salt['pillar.get']('civix:project', 'civix') %}
 {% set user = salt['pillar.get']('civix:user', '') %}
-{% set php_ver = salt['pillar.get']('civix:php:version') -%}
+{% set php_ver = salt['pillar.get']('civix:php:version') %}
 
 install-fpm:
   pkg.installed:
@@ -8,7 +8,7 @@ install-fpm:
 
 config-civix-pool:
   file.managed:
-    - name: /etc/php{{php_ver}}/fpm/pool.d/{{ project }}.conf
+    - name: /etc/php/{{php_ver}}/fpm/pool.d/{{ project }}.conf
     - source: salt://apiserver/files/fpm.conf
     - template: jinja
     - user: {{ user }}
@@ -19,7 +19,7 @@ config-civix-pool:
 
 remove-www-pool:
   file.absent:
-    - name: /etc/php{{php_ver}}/fpm/pool.d/www.conf
+    - name: /etc/php/{{php_ver}}/fpm/pool.d/www.conf
 
 manage-fpm:
   service.running:
