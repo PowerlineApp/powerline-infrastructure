@@ -50,8 +50,10 @@ install-curl:
       - python-pip
       - git
 
-install-python-utils:
+install-gitpython:
   pip.installed:
-    - pkgs:
-      - gitpython
-      - boto3
+    - name: gitpython
+
+install-boto3:
+  pip.installed:
+    - name: boto3
