@@ -1,14 +1,15 @@
+{% set php_ver = salt['pillar.get']('civix:php:version') -%}
 
 install-php-pkgs:
   pkgrepo.managed:
     - ppa: ondrej/php
   pkg.installed:
     - pkgs:
-      - php5.6
-      - php5.6-common
-      - php5.6-cli
-      - php5.6-curl
-      - php5.6-gd
-      - php5.6-mysql
-      - php5.6-sqlite3
-      - php5.6-intl
+      - php{{php_ver}}
+      - php{{php_ver}}-common
+      - php{{php_ver}}-cli
+      - php{{php_ver}}-curl
+      - php{{php_ver}}-gd
+      - php{{php_ver}}-mysql
+      - php{{php_ver}}-sqlite3
+      - php{{php_ver}}-intl

@@ -3,6 +3,7 @@ civix:
   user: civix
   deployment-bucket: deployment-data
   php:
+    version: '5.6'
     ppa: ondrej/php
     packages:
       - php5.6
