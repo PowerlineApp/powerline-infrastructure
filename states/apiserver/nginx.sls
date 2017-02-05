@@ -56,7 +56,7 @@ get-deploy-{{ cert }}:
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644
-    - source_hash: {{ hash }}
+    - source_hash: md5={{ hash }}
   {% endfor %}
 
 {% endif %}
