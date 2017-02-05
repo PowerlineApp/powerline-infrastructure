@@ -50,10 +50,10 @@ install-curl:
       - python-pip=8.1.1-2
       - git
 
-install-gitpython:
-  pip.installed:
-    - name: gitpython
+# install-gitpython:
+#   pip.installed:
+#     - name: gitpython
 
-install-boto3:
-  pip.installed:
-    - name: boto3
+# install-boto3:
+#   pip.installed:
+#     - name: boto3
