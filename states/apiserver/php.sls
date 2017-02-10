@@ -13,8 +13,12 @@ install-php-pkgs:
       - php{{php_ver}}-mysql
       - php{{php_ver}}-sqlite3
       - php{{php_ver}}-intl
-{% if php_ver == '7.0' -%}
+
+{% if php_ver == '7.0' %}
+install-extra-php7-pkgs:
+  pkg.installed:
+    - pkgs:
       - php{{php_ver}}-bcmath
       - php{{php_ver}}-xml
       - php{{php_ver}}-mbstring
-{% endif -%}
+{% endif %}
