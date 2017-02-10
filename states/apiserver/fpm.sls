@@ -25,7 +25,10 @@ manage-fpm:
   service.running:
     - name: php{{php_ver}}-fpm
     - enable: True
-    - reload: True
-    - watch:
+
+restart-fpm-configs:
+  service.running:
+    - name: php{{php_ver}}-fpm
+    - onchanges:
       - file: config-civix-pool
       - file: remove-www-pool

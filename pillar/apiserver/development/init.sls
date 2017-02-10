@@ -1,4 +1,10 @@
 civix:
+  php:
+    version: '7.0'
+    packages:
+      - php7.0
+      - php7.0-common
+      - php7.0-cli
   deploy:
     rev: develop
   environment: development
