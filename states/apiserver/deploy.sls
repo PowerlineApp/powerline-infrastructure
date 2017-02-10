@@ -44,14 +44,12 @@ create-release-dir:
     - require:
       - git: get-apiserver-repo
 
+# A hackish way to copy files into to the new release
+# Seems file.copy is broken
 {% for bf in build_files %}
 copy-{{ bf }}:
-  file.copy:
-    - name: /srv/powerline-server-releases/{{ rev }}
-    - source: /srv/powerline-server/{{ rev }}/backend/{{ bf }}
-    - user: {{ user }}
-    - group: {{ user }}
-    - subdir: True
+  cmd.run:
+    - name: cp -R /srv/powerline-server/{{ rev }}/backend/{{ bf }} /srv/powerline-server-releases/{{ rev }}
 {% endfor %}
 
 # remove files/dirs we dont need
