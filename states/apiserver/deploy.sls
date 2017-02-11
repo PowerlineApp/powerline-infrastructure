@@ -119,7 +119,7 @@ restart-nginx-for-deploy:
 
 restart-fpm-for-deploy:
   service.running:
-    - name: php5-fpm
+    - name: php{{php_ver}}-fpm
 
 # =========================
 # ====== POST DEPLOY ======
