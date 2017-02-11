@@ -1,8 +1,6 @@
 {% set user = salt['pillar.get']('civix:user') %}
 {% set rev = salt['pillar.get']('civix:deploy:rev') %}
 {% set repo = salt['pillar.get']('civix:deploy:repo') %}
-{% set build_files = salt['pillar.get']('civix:deploy:build_files') %}
-{% set absent_files = salt['pillar.get']('civix:deploy:absent_files') %}
 
 {% set env = salt['grains.get']('civix:environment') %}
 
@@ -44,20 +42,10 @@ create-release-dir:
     - require:
       - git: get-apiserver-repo
 
-# A hackish way to copy files into to the new release
-# Seems file.copy is broken
-{% for bf in build_files %}
-copy-{{ bf }}:
+# using rsycn here as i can handle excludes/includes
+rsync-in-code:
   cmd.run:
-    - name: cp -R /srv/powerline-server/{{ rev }}/backend/{{ bf }} /srv/powerline-server-releases/{{ rev }}
-{% endfor %}
-
-# remove files/dirs we dont need
-{% for af in absent_files %}
-absent-files-{{ af }}:
-  file.absent:
-    - name: /srv/powerline-server-releases/{{ rev }}/{{ af }}
-{% endfor %}
+    - name: rsync -avz --exclude='app/phpunit.xml.dist' --exclude='app/cache' --exclude='app/logs' --include='app/***' --exclude='src/Civix/ApiBundle/Test*' --exclude='src/Civix/CoreBundle/Test*' --exclude='src/Civix/FrontBundle/Test*' --include='src/***' --exclude='web/app_test.php' --include='web/***'   --include='vendor/***' --include='composer.*' --exclude='deployment/' --exclude='*' /srv/powerline-server/{{ rev }}/backend/ /srv/powerline-server-releases/{{ rev }}
 
 # fix the console perms
 console-perms:
