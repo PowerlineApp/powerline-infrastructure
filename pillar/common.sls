@@ -1,6 +1,7 @@
 civix:
   project: civix
   user: civix
+  domain: powerlinegroups.com
   deployment-bucket: deployment-data
   php:
     ppa: ondrej/php
