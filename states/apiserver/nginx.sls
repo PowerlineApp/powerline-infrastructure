@@ -75,6 +75,7 @@ enable-site:
 manage-nginx:
   service.running:
     - name: nginx
+    - enable: True
 
 # Restart nginx if changes
 restart-nginx:
