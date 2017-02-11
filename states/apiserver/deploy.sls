@@ -1,6 +1,7 @@
 {% set user = salt['pillar.get']('civix:user') %}
 {% set rev = salt['pillar.get']('civix:deploy:rev') %}
 {% set repo = salt['pillar.get']('civix:deploy:repo') %}
+{% set php_ver = salt['pillar.get']('civix:php:version') %}
 
 {% set env = salt['grains.get']('civix:environment') %}
 
@@ -92,7 +93,7 @@ stop-nginx-for-deploy:
 
 stop-fpm-for-deploy:
   service.dead:
-    - name: php5-fpm
+    - name: php{{php_ver}}-fpm
 
 # =========================
 # ====== link in ==========
