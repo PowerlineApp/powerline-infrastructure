@@ -48,6 +48,15 @@ rsync-in-code:
   cmd.run:
     - name: rsync -avz --exclude='app/phpunit.xml.dist' --exclude='app/cache' --exclude='app/logs' --include='app/***' --exclude='src/Civix/ApiBundle/Test*' --exclude='src/Civix/CoreBundle/Test*' --exclude='src/Civix/FrontBundle/Test*' --include='src/***' --exclude='web/app_test.php' --include='web/***'   --include='vendor/***' --include='composer.*' --exclude='deployment/' --exclude='*' /srv/powerline-server/{{ rev }}/backend/ /srv/powerline-server-releases/{{ rev }}
 
+civix-deploy-perms:
+  file.directory:
+    - name: /srv/powerline-server-releases/{{ rev }}
+    - user: {{ user }}
+    - group: {{ user }}
+    - recurse:
+      - user
+      - group
+
 # fix the console perms
 console-perms:
   file.managed:
