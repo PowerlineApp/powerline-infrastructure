@@ -60,7 +60,7 @@ civix-deploy-perms:
 # fix the console perms
 console-perms:
   file.managed:
-    - name: /srv/powerline-server-releases/{{ rev }}/app/console
+    - name: /srv/powerline-server-releases/{{ rev }}/bin/console
     - mode: 755
     - user: {{ user }}
     - group: {{ user }}
@@ -137,13 +137,13 @@ restart-fpm-for-deploy:
 # Warm cache
 warm-cache:
   cmd.run:
-    - name: /srv/civix/civix-apiserver/app/console cache:warmup --env=prod
+    - name: /srv/civix/civix-apiserver/bin/console cache:warmup --env=prod
     - runas: {{ user }}
 
 # Run migrations
 doctrine-migrations:
   cmd.run:
-    - name: /srv/civix/civix-apiserver/app/console doctrine:migrations:migrate -n
+    - name: /srv/civix/civix-apiserver/bin/console doctrine:migrations:migrate -n
 
 bounce-supervisor-push-queue:
   supervisord.running:
