@@ -150,8 +150,15 @@ bounce-supervisor-push-queue:
     - name: civix_push_queue
     - restart: True
 
-#bounce-supervisor-payments:
-#bounce-supervisor-subs:
+bounce-supervisor-payments:
+  supervisord.running:
+    - name: civix_payments
+    - restart: True
+
+bounce-supervisor-subs:
+  supervisord.running:
+    - name: civix_subscriptions
+    - restart: True
 
 # Add a release grain to the minion
 app-build-version:
