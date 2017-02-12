@@ -46,7 +46,7 @@ create-release-dir:
 # using rsycn here as i can handle excludes/includes
 rsync-in-code:
   cmd.run:
-    - name: rsync -avz --exclude='app/phpunit.xml.dist' --exclude='app/cache' --exclude='app/logs' --include='app/***' --exclude='src/Civix/ApiBundle/Test*' --exclude='src/Civix/CoreBundle/Test*' --exclude='src/Civix/FrontBundle/Test*' --include='src/***' --exclude='web/app_test.php' --include='web/***'   --include='vendor/***' --include='composer.*' --exclude='deployment/' --exclude='*' /srv/powerline-server/{{ rev }}/backend/ /srv/powerline-server-releases/{{ rev }}
+    - name: rsync -avz --exclude='app/phpunit.xml.dist' --exclude='app/cache' --exclude='app/logs' --include='app/***' --include='bin/***' --exclude='src/Civix/ApiBundle/Test*' --exclude='src/Civix/CoreBundle/Test*' --exclude='src/Civix/FrontBundle/Test*' --include='src/***' --exclude='web/app_test.php' --include='web/***'   --include='vendor/***' --include='composer.*' --exclude='deployment/' --exclude='*' /srv/powerline-server/{{ rev }}/backend/ /srv/powerline-server-releases/{{ rev }}
 
 civix-deploy-perms:
   file.directory:
