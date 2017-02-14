@@ -1,6 +1,9 @@
 {% set project = salt['pillar.get']('civix:project') %}
 {% set user = salt['pillar.get']('civix:user') %}
-{% set env = salt['pillar.get']('civix:environment') %}
+{% set env = {
+  'production'  : 'prod',
+  'development' : 'dev',
+  'staging'     : 'prod'}.get(salt['pillar.get']('civix:environment') %}
 
 install-supervisor:
   pkg.installed:
@@ -23,6 +26,7 @@ config-push-queue:
     - mode: 644
     - context:
         project: {{ project }}
+        env : {{ env }}
 
 config-payments:
   file.managed:
@@ -34,6 +38,8 @@ config-payments:
     - mode: 644
     - context:
         project: {{ project }}
+        env : {{ env }}
+
 
 config-subscriptions:
   file.managed:
@@ -45,6 +51,8 @@ config-subscriptions:
     - mode: 644
     - context:
         project: {{ project }}
+        env : {{ env }}
+
 
 {% for q in salt['pillar.get']('civix:supervisord:queues') %}
 supervisor-service-{{ q }}:
