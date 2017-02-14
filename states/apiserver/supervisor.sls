@@ -3,7 +3,7 @@
 {% set env = {
   'production'  : 'prod',
   'development' : 'dev',
-  'staging'     : 'prod'}.get(salt['pillar.get']('civix:environment') %}
+  'staging'     : 'prod'}.get(salt['pillar.get']('civix:environment')) %}
 
 install-supervisor:
   pkg.installed:
