@@ -3,7 +3,10 @@
 {% set repo = salt['pillar.get']('civix:deploy:repo') %}
 {% set php_ver = salt['pillar.get']('civix:php:version') %}
 
-{% set env = salt['grains.get']('civix:environment') %}
+{% set env = {
+  'production'  : 'prod',
+  'development' : 'dev',
+  'staging'     : 'prod'}.get(salt['pillar.get']('civix:environment')) %}
 
 {% set release = None|strftime("%Y%m%d%H%M%S") %}
 
@@ -86,7 +89,7 @@ get-parameters:
 composer-install:
   composer.installed:
     - name: /srv/powerline-server-releases/{{ rev }}
-{% if env.startswith("prod") %}
+{% if env == "prod" %}
     - no_dev: True
 {% endif %}
     - prefer_dist: True
@@ -137,13 +140,14 @@ restart-fpm-for-deploy:
 # Warm cache
 warm-cache:
   cmd.run:
-    - name: /srv/civix/civix-apiserver/bin/console cache:warmup --env=prod
+    - name: /srv/civix/civix-apiserver/bin/console cache:warmup --env={{ env }}
     - runas: {{ user }}
 
 # Run migrations
 doctrine-migrations:
   cmd.run:
     - name: /srv/civix/civix-apiserver/bin/console doctrine:migrations:migrate -n
+    - runas: {{ user }}
 
 bounce-supervisor-push-queue:
   supervisord.running:

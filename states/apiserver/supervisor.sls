@@ -58,6 +58,7 @@ config-subscriptions:
 supervisor-service-{{ q }}:
   supervisord.running:
     - name: {{ project }}_{{ q }}
+    - restart: True
     - onchanges:
       - file: /etc/supervisor/conf.d/{{ project }}_{{ q }}.conf
 {% endfor %}
