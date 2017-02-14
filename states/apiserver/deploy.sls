@@ -159,11 +159,6 @@ bounce-supervisor-payments:
     - name: civix_payments
     - restart: True
 
-bounce-supervisor-subs:
-  supervisord.running:
-    - name: civix_subscriptions
-    - restart: True
-
 # Add a release grain to the minion
 app-build-version:
   grains.present:

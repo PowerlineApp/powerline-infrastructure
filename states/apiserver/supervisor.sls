@@ -40,25 +40,16 @@ config-payments:
         project: {{ project }}
         env : {{ env }}
 
-
-config-subscriptions:
-  file.managed:
-    - name: /etc/supervisor/conf.d/{{ project }}_subscriptions.conf
-    - source: salt://apiserver/files/supervisor_subscriptions.conf
-    - template: jinja
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 644
-    - context:
-        project: {{ project }}
-        env : {{ env }}
-
-
-{% for q in salt['pillar.get']('civix:supervisord:queues') %}
-supervisor-service-{{ q }}:
+supervisor-service-payments:
   supervisord.running:
-    - name: {{ project }}_{{ q }}
+    - name: {{ project }}_payments
     - restart: True
     - onchanges:
-      - file: /etc/supervisor/conf.d/{{ project }}_{{ q }}.conf
-{% endfor %}
+      - file: /etc/supervisor/conf.d/{{ project }}_payments.conf
+
+supervisor-service-push-queue:
+  supervisord.running:
+    - name: {{ project }}_push_queue
+    - restart: True
+    - onchanges:
+      - file: /etc/supervisor/conf.d/{{ project }}_push_queue.conf
