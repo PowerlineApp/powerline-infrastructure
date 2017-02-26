@@ -1,0 +1,12 @@
+{
+  "Type" : "Notification",
+  "MessageId" : "e3b640c2-ae8e-552e-9dcd-11e901b50dfb",
+  "TopicArn" : "arn:aws:sns:us-east-1:714046576324:test",
+  "Subject" : "Auto Scaling: launch for group \"test-group\"",
+  "Message" : "{\"Progress\":50,\"AccountId\":\"714046576324\",\"Description\":\"Launching a new EC2 instance: i-026eb36b264e0d0c1\",\"RequestId\":\"2f0c403d-78aa-4600-8d27-da4d6387b4fc\",\"EndTime\":\"2017-02-25T16:12:43.032Z\",\"AutoScalingGroupARN\":\"arn:aws:autoscaling:us-east-1:714046576324:autoScalingGroup:c4b515e7-573f-4525-a833-6d541de8f898:autoScalingGroupName/test-group\",\"ActivityId\":\"2f0c403d-78aa-4600-8d27-da4d6387b4fc\",\"StartTime\":\"2017-02-25T16:12:10.590Z\",\"Service\":\"AWS Auto Scaling\",\"Time\":\"2017-02-25T16:12:43.032Z\",\"EC2InstanceId\":\"i-026eb36b264e0d0c1\",\"StatusCode\":\"InProgress\",\"StatusMessage\":\"\",\"Details\":{\"Subnet ID\":\"subnet-4ed69417\",\"Availability Zone\":\"us-east-1a\"},\"AutoScalingGroupName\":\"test-group\",\"Cause\":\"At 2017-02-25T16:11:43Z a user request update of AutoScalingGroup constraints to min: 1, max: 1, desired: 1 changing the desired capacity from 0 to 1.  At 2017-02-25T16:12:08Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1.\",\"Event\":\"autoscaling:EC2_INSTANCE_LAUNCH\"}",
+  "Timestamp" : "2017-02-25T16:12:43.079Z",
+  "SignatureVersion" : "1",
+  "Signature" : "eN1jzkyR9+trQB5peuTpBvSHIdfGFWogDXY6EtOWSl7S6MptjdtiElqunsEz1qGY57XriBIqrzQgcqkc0FkJhDctSVQk4MqyyO4/uSu9oU+QMQvGu5rl18L7N3NGbm6GcDTnUQdI3TEjML9dSvTongnV8thZvWmqA4Y4gQ+8COczAcK+SXo/JDklOxxtQAbcpWdHXVRN4+6nSIuAHWe8p/xXdLxeJB+iLKXGshhfyWqtj1aiJopEzjmZ0DLfRWDbw/rsCokmvFh5j/XCJYT+DlZuK5IXthbdFAKL3KG9x4SwSaYJZnh/zvf6KfTAYybEv+QzLZks5n0iHGRk+2kmwQ==",
+  "SigningCertURL" : "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-b95095beb82e8f6a046b3aafc7f4149a.pem",
+  "UnsubscribeURL" : "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:714046576324:test:df8a3ae6-80e3-446a-bfa8-5e9b19d1b7b2"
+}

@@ -1,0 +1,6 @@
+#cloud-config
+runcmd:
+ - "echo saltmaster > /etc/hostname"
+ - "echo 127.0.1.1 saltmaster >> /etc/hosts"
+ - "hostnamectl set-hostname saltmaster"
+ - "wget -O - https://bootstrap.saltstack.com | sudo sh -s -- -M -N -P -c /tmp"

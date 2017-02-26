@@ -1,0 +1,8 @@
+#cloud-config
+runcmd:
+ - "INSTANCE_ID=$(wget -q -O - http://instance-data/latest/meta-data/instance-id)"
+ - "echo pas-$INSTANCE_ID > /etc/hostname"
+ - "echo 127.0.1.1 pas-$INSTANCE_ID >> /etc/hosts"
+ - "hostnamectl set-hostname pas-$INSTANCE_ID"
+ - "wget -O - https://bootstrap.saltstack.com | sudo sh -s -- -A 172.30.2.167"
+ - "echo -e 'civix:\n  environment: production' > /etc/salt/grains"
