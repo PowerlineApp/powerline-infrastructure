@@ -139,7 +139,7 @@ def new_instance(args):
             miniontimestamp=None)
       else:
         record = record._replace(instancetimestamp=time.time())
-      print " ===> Adding new ec2 instance record: %s"%record
+      print " ===> Adding new ec2 instance record: ß",record
       write_record(conn, record)
     conn.commit()
   return 0
@@ -162,7 +162,7 @@ def new_minion(args):
         record = Record(instanceid=minion, instancetimestamp=None, miniontimestamp=time.time())
       else:
         record = record._replace(miniontimestamp=time.time())
-      print " ===> Adding new minion instance record: %s"%record
+      print " ===> Adding new minion instance record: ",record
       write_record(conn, record)
     conn.commit()
   return 0
