@@ -8,7 +8,7 @@ import subprocess
 
 
 DEFAULT_DATABASE_LOCATION = '/var/tmp/salt-autoscaling.db'
-DEFAULT_REGISTRY_SCRIPT = '/srv/salt/reactor/autoscaling/asg_registry.py'
+DEFAULT_REGISTRY_SCRIPT = '/srv/powerline-infrastructure/reactor/autoscaling/asg_registry.py'
 
 
 def _registry_call(database_location, registry_script):
