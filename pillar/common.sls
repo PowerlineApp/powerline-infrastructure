@@ -15,3 +15,5 @@ civix:
   rabbitmq:
     user: civix
     vhost: civix
+  asg:
+    prefix: pas
