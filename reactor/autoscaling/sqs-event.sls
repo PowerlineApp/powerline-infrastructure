@@ -1,4 +1,4 @@
-{% set minionid = salt['pillar.get']('civix:asg:prefix') + data['message']['Message']['EC2InstanceId'] %}
+{% set minionid = 'pas-' + data['message']['Message']['EC2InstanceId'] %}
 
 # ===================
 # Accept key on ASG instance launch
