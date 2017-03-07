@@ -1,98 +1,59 @@
 {% set user = salt['pillar.get']('civix:user') %}
-{% set rev = salt['pillar.get']('civix:deploy:rev') %}
 {% set repo = salt['pillar.get']('civix:deploy:repo') %}
 {% set php_ver = salt['pillar.get']('civix:php:version') %}
+
+{% set build_repo = 'https://s3.amazonaws.com/powerline-apiserver-builds' %}
 
 {% set env = {
   'production'  : 'prod',
   'development' : 'dev',
   'staging'     : 'prod'}.get(salt['pillar.get']('civix:environment')) %}
 
-{% set release = None|strftime("%Y%m%d%H%M%S") %}
-
 # =========================
-# ====== git-latest =======
+# ====== get build ========
 # =========================
 
-# Get the latest release of powerline-server
+# Get the latest build of powerline-server
 
 create-build-dir:
   file.directory:
-    - name: /srv/powerline-server/{{ rev }}
+    - name: /srv/civix/
     - user: {{ user }}
     - group: {{ user }}
     - mode: 755
     - makedirs: True
 
-get-apiserver-repo:
-  git.latest:
-    - name: {{ repo }}
-    - target: /srv/powerline-server/{{ rev }}
-    - branch: {{ rev }}
-
-# ==============================
-# ====== prepare release =======
-# ==============================
-
-# Create a release dir so we can move in the right dirs
-# and vendor (composer)
-create-release-dir:
-  file.directory:
-    - name: /srv/powerline-server-releases/{{ rev }}
-    - makedirs: True
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 755
-    - require:
-      - git: get-apiserver-repo
-
-# using rsycn here as i can handle excludes/includes
-rsync-in-code:
-  cmd.run:
-    - name: rsync -avz --exclude='app/phpunit.xml.dist' --exclude='app/cache' --exclude='app/logs' --include='app/***' --include='bin/***' --exclude='src/Civix/ApiBundle/Test*' --exclude='src/Civix/CoreBundle/Test*' --exclude='src/Civix/FrontBundle/Test*' --include='src/***' --exclude='web/app_test.php' --include='web/***'   --include='vendor/***' --include='composer.*' --exclude='deployment/' --exclude='*' /srv/powerline-server/{{ rev }}/backend/ /srv/powerline-server-releases/{{ rev }}
-
-civix-deploy-perms:
-  file.directory:
-    - name: /srv/powerline-server-releases/{{ rev }}
-    - user: {{ user }}
-    - group: {{ user }}
-    - recurse:
-      - user
-      - group
-
-# fix the console perms
-console-perms:
+pull-deb:
   file.managed:
-    - name: /srv/powerline-server-releases/{{ rev }}/bin/console
-    - mode: 755
+    - name: /srv/civix_{{ build }}_all.deb
     - user: {{ user }}
     - group: {{ user }}
+    - source: {{ build_repo }}/{{ branch }}/civix_{{ build }}_all.deb
+    - source_hash: {{ build_repo }}/{{ branch }}/civix_{{ build }}_all.deb.hash
+
+# =============================
+# ====== get parameters =======
+# =============================
+
+create-build-dir:
+  file.directory:
+    - name: /srv/config/
+    - user: {{ user }}
+    - group: {{ user }}
+    - mode: 755
+    - makedirs: True
 
 # This will pull in all parameters defined in the
 # pillar for whatever env you are working on
 # The env is defined by the grains of the instance
 get-parameters:
   file.serialize:
-    - name: /srv/powerline-server-releases/{{ rev }}/app/config/parameters.yml
+    - name: /srv/config/parameters.yml
     - mode: 644
     - user: {{ user }}
     - group: {{ user }}
     - dataset_pillar: civix:symfony
     - formatter: yaml
-
-# =========================
-# ====== composer =========
-# =========================
-
-# Pull down all vendors
-
-composer-install:
-  composer.installed:
-    - name: /srv/powerline-server-releases/{{ rev }}
-{% if env == "prod" %}
-    - no_dev: True
-{% endif %}
-    - prefer_dist: True
 
 # =========================
 # ====== STOP SERVICES ====
@@ -107,14 +68,20 @@ stop-fpm-for-deploy:
   service.dead:
     - name: php{{php_ver}}-fpm
 
-# =========================
-# ====== link in ==========
-# =========================
+# ===========================
+# ====== Install latest =====
+# ===========================
 
-link-latest-build:
-  file.symlink:
-    - name: /srv/civix/civix-apiserver
-    - target: /srv/powerline-server-releases/{{ rev }}
+install-civix-build:
+  pkg.installed:
+    - sources:
+      - civix: /srv/civix_{{ build }}_all.deb
+
+# fix the console perms
+console-perms:
+  file.managed:
+    - name: /srv/civix/bin/console
+    - mode: 755
     - user: {{ user }}
     - group: {{ user }}
 
@@ -122,12 +89,9 @@ link-latest-build:
 # ==== RESTART SERVICES ===
 # =========================
 
-#
 restart-nginx-for-deploy:
   service.running:
     - name: nginx
-    - watch:
-      - file: link-latest-build
 
 restart-fpm-for-deploy:
   service.running:
@@ -140,13 +104,13 @@ restart-fpm-for-deploy:
 # Warm cache
 warm-cache:
   cmd.run:
-    - name: /srv/civix/civix-apiserver/bin/console cache:warmup --env={{ env }}
+    - name: /srv/civix/bin/console cache:warmup --env={{ env }}
     - runas: {{ user }}
 
 # Run migrations
 doctrine-migrations:
   cmd.run:
-    - name: /srv/civix/civix-apiserver/bin/console doctrine:migrations:migrate -n
+    - name: /srv/civix/bin/console doctrine:migrations:migrate -n
     - runas: {{ user }}
 
 bounce-supervisor-push-queue:

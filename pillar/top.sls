@@ -13,6 +13,8 @@ base:
   'civix:environment:staging':
     - match: grain
     - apiserver.staging
+    - apiserver.staging.parameters
   'civix:environment:production':
     - match: grain
     - apiserver.production
+    - apiserver.production.parameters

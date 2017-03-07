@@ -5,8 +5,6 @@ civix:
       - php7.0
       - php7.0-common
       - php7.0-cli
-  deploy:
-    rev: develop
   environment: development
   api_certs:
     server.crt: 87833921427210fbe25280c7854eb489
