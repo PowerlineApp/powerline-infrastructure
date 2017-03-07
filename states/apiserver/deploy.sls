@@ -10,6 +10,11 @@
   'development' : 'dev',
   'staging'     : 'prod'}.get(salt['pillar.get']('civix:environment')) %}
 
+{% set branch = {
+  'prod'     : 'release',
+  'staging'  : 'master',
+  'dev'      : 'develop'}.get( env ) %}
+
 # =========================
 # ====== get build ========
 # =========================
@@ -36,7 +41,7 @@ pull-deb:
 # ====== get parameters =======
 # =============================
 
-create-build-dir:
+create-config-dir:
   file.directory:
     - name: /srv/config/
     - user: {{ user }}
@@ -127,6 +132,6 @@ bounce-supervisor-payments:
 # Add a release grain to the minion
 app-build-version:
   grains.present:
-    - name: civix:release
-    - value: {{ rev }}
+    - name: civix:build
+    - value: {{ build }}
 
