@@ -3,6 +3,7 @@
 {% set php_ver = salt['pillar.get']('civix:php:version') %}
 
 {% set build_repo = 'https://s3.amazonaws.com/powerline-apiserver-builds' %}
+{% set build = salt['pillar.get']('build', 'latest')%}
 
 {% set env = {
   'production'  : 'prod',
