@@ -90,14 +90,14 @@ install-civix-build:
 link-in-new-build:
   file.symlink:
     - name: /srv/civix/apiserver
-    - source: /srv/civix-apiserver/{{ build }}
+    - target: /srv/civix-apiserver/{{ build }}
     - require:
       - pkg: install-civix-build
 
 # fix the console perms
 console-perms:
   file.managed:
-    - name: /srv/civix/bin/console
+    - name: /srv/civix/apiserver/bin/console
     - mode: 755
     - user: {{ user }}
     - group: {{ user }}
@@ -123,7 +123,7 @@ restart-fpm-for-deploy:
 # Warm cache
 warm-cache:
   cmd.run:
-    - name: /srv/civix/bin/console cache:warmup --env={{ env }}
+    - name: /srv/civix/apiserver/bin/console cache:warmup --env={{ env }}
     - runas: {{ user }}
     - require:
       - pkg: install-civix-build
@@ -131,7 +131,7 @@ warm-cache:
 # Run migrations
 doctrine-migrations:
   cmd.run:
-    - name: /srv/civix/bin/console doctrine:migrations:migrate -n
+    - name: /srv/civix/apiserver/bin/console doctrine:migrations:migrate -n
     - runas: {{ user }}
     - require:
       - pkg: install-civix-build
