@@ -31,11 +31,11 @@ create-build-dir:
 
 pull-deb:
   file.managed:
-    - name: /srv/civix_{{ build }}_all.deb
+    - name: /srv/civix-apiserver_{{ build }}_all.deb
     - user: {{ user }}
     - group: {{ user }}
-    - source: {{ build_repo }}/{{ branch }}/civix_{{ build }}_all.deb
-    - source_hash: {{ build_repo }}/{{ branch }}/civix_{{ build }}_all.deb.hash
+    - source: {{ build_repo }}/{{ branch }}/civix-apiserver_{{ build }}_all.deb
+    - source_hash: {{ build_repo }}/{{ branch }}/civix-apiserver_{{ build }}_all.deb.hash
 
 # =============================
 # ====== get parameters =======
@@ -67,12 +67,14 @@ get-parameters:
 stop-nginx-for-deploy:
   service.dead:
     - name: nginx
-    - prereq:
-      - composer: composer-install
+    - onchanges:
+      - file: pull-deb
 
 stop-fpm-for-deploy:
   service.dead:
     - name: php{{php_ver}}-fpm
+    - onchanges:
+      - file: pull-deb
 
 # ===========================
 # ====== Install latest =====
@@ -81,7 +83,9 @@ stop-fpm-for-deploy:
 install-civix-build:
   pkg.installed:
     - sources:
-      - civix: /srv/civix_{{ build }}_all.deb
+      - civix: /srv/civix-apiserver_{{ build }}_all.deb
+      - require:
+        - file: pull-deb
 
 # fix the console perms
 console-perms:
@@ -90,6 +94,8 @@ console-perms:
     - mode: 755
     - user: {{ user }}
     - group: {{ user }}
+    - require:
+      - pkg: install-civix-build
 
 # =========================
 # ==== RESTART SERVICES ===
@@ -112,12 +118,16 @@ warm-cache:
   cmd.run:
     - name: /srv/civix/bin/console cache:warmup --env={{ env }}
     - runas: {{ user }}
+    - require:
+      - pkg: install-civix-build
 
 # Run migrations
 doctrine-migrations:
   cmd.run:
     - name: /srv/civix/bin/console doctrine:migrations:migrate -n
     - runas: {{ user }}
+    - require:
+      - pkg: install-civix-build
 
 bounce-supervisor-push-queue:
   supervisord.running:
