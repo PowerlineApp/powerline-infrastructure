@@ -87,6 +87,13 @@ install-civix-build:
     - require:
       - file: pull-deb
 
+link-in-new-build:
+  file.symlink:
+    - name: /srv/civix/apiserver
+    - source: /srv/civix-apiserver/{{ build }}
+    - require:
+      - pkg: install-civix-build
+
 # fix the console perms
 console-perms:
   file.managed:
