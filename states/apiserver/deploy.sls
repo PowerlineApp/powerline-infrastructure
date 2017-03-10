@@ -84,8 +84,8 @@ install-civix-build:
   pkg.installed:
     - sources:
       - civix: /srv/civix-apiserver_{{ build }}_all.deb
-      - require:
-        - file: pull-deb
+    - require:
+      - file: pull-deb
 
 # fix the console perms
 console-perms:
