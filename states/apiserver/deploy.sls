@@ -19,16 +19,7 @@
 # ====== get build ========
 # =========================
 
-# Get the latest build of powerline-server
-
-create-build-dir:
-  file.directory:
-    - name: /srv/civix/
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 755
-    - makedirs: True
-
+# Get the latest build of powerline-server from s3
 pull-deb:
   file.managed:
     - name: /srv/civix-apiserver_{{ build }}_all.deb
@@ -40,14 +31,6 @@ pull-deb:
 # =============================
 # ====== get parameters =======
 # =============================
-
-create-config-dir:
-  file.directory:
-    - name: /srv/config/
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 755
-    - makedirs: True
 
 # This will pull in all parameters defined in the
 # pillar for whatever env you are working on
