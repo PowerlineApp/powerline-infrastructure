@@ -85,6 +85,15 @@ link-in-parameters:
     - require:
       - file: link-in-new-build
 
+change-owner:
+  file.directory:
+    - name: /srv/civix/apiserver
+    - user: {{ civix }}
+    - group: {{ civix }}
+    - recurse:
+      - user
+      - group
+
 # fix the console perms
 console-perms:
   file.managed:
