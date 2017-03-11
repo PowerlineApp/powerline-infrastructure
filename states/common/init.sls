@@ -23,8 +23,6 @@ config-dirs:
       - /srv/civix
       - /srv/config
       - /srv/certs
-      - /srv/powerline-server-releases
-      - /srv/powerline-server
     - user: {{ user }}
     - group: {{ user }}
     - dir_mode: 755
