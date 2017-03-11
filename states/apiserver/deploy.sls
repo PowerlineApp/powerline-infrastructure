@@ -81,8 +81,9 @@ link-in-parameters:
   file.symlink:
     - name: /srv/civix/apiserver/app/config/parameters.yml
     - target: /srv/config/parameters.yml
+    - force: True
     - require:
-      - pkg: link-in-new-build
+      - file: link-in-new-build
 
 # fix the console perms
 console-perms:
@@ -93,6 +94,7 @@ console-perms:
     - group: {{ user }}
     - require:
       - pkg: install-civix-build
+      - file: link-in-new-build
 
 # =========================
 # ==== RESTART SERVICES ===
