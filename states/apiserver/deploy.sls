@@ -77,6 +77,13 @@ link-in-new-build:
     - require:
       - pkg: install-civix-build
 
+link-in-parameters:
+  file.symlink:
+    - name: /srv/civix/apiserver/app/config/parameters.yml
+    - target: /srv/config/parameters.yml
+    - require:
+      - pkg: link-in-new-build
+
 # fix the console perms
 console-perms:
   file.managed:
