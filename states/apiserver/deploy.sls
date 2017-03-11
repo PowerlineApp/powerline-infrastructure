@@ -88,8 +88,8 @@ link-in-parameters:
 change-owner:
   file.directory:
     - name: /srv/civix/apiserver
-    - user: {{ civix }}
-    - group: {{ civix }}
+    - user: {{ user }}
+    - group: {{ user }}
     - recurse:
       - user
       - group
