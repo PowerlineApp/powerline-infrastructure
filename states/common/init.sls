@@ -27,20 +27,20 @@ config-dirs:
     - group: {{ user }}
     - dir_mode: 755
 
-get-composer:
-  cmd.run:
-    - name: 'CURL=`which curl`; $CURL -sS https://getcomposer.org/installer | php'
-    - unless: test -f /usr/local/bin/composer
-    - cwd: /root/
-    - env:
-      - HOME: /root
+# get-composer:
+#   cmd.run:
+#     - name: 'CURL=`which curl`; $CURL -sS https://getcomposer.org/installer | php'
+#     - unless: test -f /usr/local/bin/composer
+#     - cwd: /root/
+#     - env:
+#       - HOME: /root
 
-install-composer:
-  cmd.run:
-    - name: mv /root/composer.phar /usr/local/bin/composer
-    - cwd: /root/
-    - onchanges:
-      - cmd: get-composer
+# install-composer:
+#   cmd.run:
+#     - name: mv /root/composer.phar /usr/local/bin/composer
+#     - cwd: /root/
+#     - onchanges:
+#       - cmd: get-composer
 
 install-curl:
   pkg.installed:
