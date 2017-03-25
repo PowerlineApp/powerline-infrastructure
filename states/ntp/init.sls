@@ -6,5 +6,5 @@ manage-ntp:
     - name: ntp
     - enable: True
     - reload: True
-    - watch:
+    - onchanges:
       - pkg: ntp
