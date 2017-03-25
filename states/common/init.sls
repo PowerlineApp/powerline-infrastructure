@@ -1,14 +1,20 @@
 {% set user = salt['pillar.get']('civix:user') -%}
 {% set php_ver = salt['pillar.get']('civix:php:version') -%}
 
-common-php-pkgs:
+common-php-ppa:
   pkgrepo.managed:
     - ppa: {{ salt['pillar.get']('civix:php:ppa') }}
+    - refresh_db: True
+
+common-php-pkgs:
   pkg.installed:
     - pkgs:
       - php{{php_ver}}
       - php{{php_ver}}-common
       - php{{php_ver}}-cli
+    - skip_verify: True
+    - require:
+      - pkgrepo: common-php-ppa
 
 add-civix-user:
   user.present:
@@ -27,22 +33,7 @@ config-dirs:
     - group: {{ user }}
     - dir_mode: 755
 
-# get-composer:
-#   cmd.run:
-#     - name: 'CURL=`which curl`; $CURL -sS https://getcomposer.org/installer | php'
-#     - unless: test -f /usr/local/bin/composer
-#     - cwd: /root/
-#     - env:
-#       - HOME: /root
-
-# install-composer:
-#   cmd.run:
-#     - name: mv /root/composer.phar /usr/local/bin/composer
-#     - cwd: /root/
-#     - onchanges:
-#       - cmd: get-composer
-
-install-curl:
+install-deps:
   pkg.installed:
     - pkgs:
       - curl
