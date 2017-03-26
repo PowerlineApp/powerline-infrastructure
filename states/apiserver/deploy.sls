@@ -8,7 +8,7 @@
 {% set env = {
   'production'  : 'prod',
   'development' : 'dev',
-  'staging'     : 'prod'}.get(salt['pillar.get']('civix:environment')) %}
+  'staging'     : 'prod'}.get(salt['grains.get']('civix:environment')) %}
 
 {% set branch = {
   'prod'     : 'release',
