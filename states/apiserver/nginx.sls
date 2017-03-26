@@ -4,6 +4,12 @@
 {% set env = salt['grains.get']('civix:environment') %}
 {% set hostname = salt['grains.get']('hostname') %}
 
+{% if grains['os'] == 'Ubuntu' %}
+stop-apache2:
+  service.dead:
+    - name: apache2
+{% endif %}
+
 install-nginx:
   pkg.installed:
     - name: nginx
