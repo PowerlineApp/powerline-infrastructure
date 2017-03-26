@@ -85,9 +85,9 @@ link-in-parameters:
     - require:
       - file: link-in-new-build
 
-change-owner:
+change-build-dir-owner:
   file.directory:
-    - name: /srv/civix/apiserver
+    - name: /srv/civix-apiserver/{{ build }}
     - user: {{ user }}
     - group: {{ user }}
     - recurse:
