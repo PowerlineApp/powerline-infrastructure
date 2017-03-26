@@ -1,8 +1,6 @@
 {% set php_ver = salt['pillar.get']('civix:php:version') -%}
 
 install-php-pkgs:
-  pkgrepo.managed:
-    - ppa: ondrej/php
   pkg.installed:
     - pkgs:
       - php{{php_ver}}
@@ -13,6 +11,7 @@ install-php-pkgs:
       - php{{php_ver}}-mysql
       - php{{php_ver}}-sqlite3
       - php{{php_ver}}-intl
+    - skip_verify: True
 
 {% if php_ver == '7.0' %}
 install-extra-php7-pkgs:
@@ -21,4 +20,6 @@ install-extra-php7-pkgs:
       - php{{php_ver}}-bcmath
       - php{{php_ver}}-xml
       - php{{php_ver}}-mbstring
+    - skip_verify: True
+
 {% endif %}

@@ -5,6 +5,7 @@
 install-fpm:
   pkg.installed:
     - name: php{{php_ver}}-fpm
+    - skip_verify: True
 
 config-civix-pool:
   file.managed:
