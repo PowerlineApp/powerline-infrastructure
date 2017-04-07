@@ -3,7 +3,7 @@
 {% set php_ver = salt['pillar.get']('civix:php:version') %}
 
 {% set build_repo = 'https://s3.amazonaws.com/powerline-apiserver-builds' %}
-{% set build = salt['pillar.get']('build', 'latest')%}
+{% set build = salt['pillar.get']('build')%}
 
 {% set env = {
   'production'  : 'prod',
@@ -13,7 +13,7 @@
 {% set branch = {
   'prod'     : 'release',
   'staging'  : 'master',
-  'dev'      : 'develop'}.get( env ) %}
+  'dev'      : 'develop'}.get(salt['grains.get']('civix:environment')) %}
 
 # =========================
 # ====== get build ========
