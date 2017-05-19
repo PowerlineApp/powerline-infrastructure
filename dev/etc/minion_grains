@@ -1,4 +1,0 @@
-civix:
-  environment: vagrant
-  roles:
-    - apiserver
