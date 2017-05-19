@@ -1,10 +1,10 @@
 pillar_roots:
   base:
-    - /srv/pillar
+    - /srv/powerline-infrastructure/pillar
 
 file_roots:
   base:
-    - /srv/salt
+    - /srv/powerline-infrastructure/states
 
 fileserver_backend:
   - roots
