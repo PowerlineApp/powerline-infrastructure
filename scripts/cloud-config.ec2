@@ -1,0 +1,4 @@
+#cloud-config
+runcmd:
+ - "wget -O - https://bootstrap.saltstack.com | sudo sh -s -- -A 172.30.0.60"
+ - "echo 'civix:\n  environment: production' > /etc/salt/grains"
