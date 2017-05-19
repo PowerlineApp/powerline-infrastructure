@@ -3,6 +3,7 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
+SALT_VERSION = "2016.11.5"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |vb|
@@ -39,6 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.no_minion = false
       salt.verbose = true
       salt.bootstrap_options = "-P -c /tmp"
+      salt.version = SALT_VERSION
     end
 
   end
@@ -61,6 +63,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.verbose = true
       salt.colorize = true
       salt.bootstrap_options = "-P -c /tmp"
+      salt.version = SALT_VERSION
       salt.run_highstate = true
     end
 
