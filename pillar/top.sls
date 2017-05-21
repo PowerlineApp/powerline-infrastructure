@@ -23,5 +23,8 @@ base:
     - apiserver.production
     - apiserver.production.parameters
 
+# === Legacy section ====
+# this will use /srv/powerline-legacy/salt
+
   'civix-dev':
     - legacy.rabbitmq
