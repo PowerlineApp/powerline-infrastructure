@@ -1,2 +1,6 @@
+
 private.sls
 keys.sls
+parameters.sls
+!pillar/parameters.sls
+!pillar/apiserver/vagrant/parameters.sls
