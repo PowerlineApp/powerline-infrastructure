@@ -11,9 +11,9 @@
   'staging'     : 'prod'}.get(salt['grains.get']('civix:environment')) %}
 
 {% set branch = {
-  'prod'     : 'release',
+  'prod'     : 'releases',
   'staging'  : 'master',
-  'dev'      : 'develop'}.get(salt['grains.get']('civix:environment')) %}
+  'dev'      : 'develop'}.get(salt['grains.get']('civix:env')) %}
 
 # =========================
 # ====== get build ========
