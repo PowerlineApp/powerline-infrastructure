@@ -24,22 +24,18 @@ config-civix-pool:
     - mode: 644
     - context:
         project: {{ project }}
-
-restart-fpm-configs:
-  service.running:
-    - name: php{{php_ver}}-fpm
-    - listen:
-      - file: config-civix-pool
+    - listen_in:
+      - service: restart-fpm-configs
 
 remove-www-pool:
   file.absent:
     - name: /etc/php/{{php_ver}}/fpm/pool.d/www.conf
+    - listen_in:
+      - service: restart-fpm-configs
 
 restart-fpm-configs:
   service.running:
     - name: php{{php_ver}}-fpm
-    - listen:
-      - file: remove-www-pool
 
 manage-fpm:
   service.running:
