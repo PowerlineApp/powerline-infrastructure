@@ -1,3 +1,10 @@
+
+# NOTE:
+#   The immeidate issue with FPM is that the init scripts run it as
+#   the version that is installed (php<ver>-fpm). so stopping to load
+#   a new version is not going to work here. you need to manually stop
+#   the previous one and start the new one.
+
 {% set project = salt['pillar.get']('civix:project', 'civix') %}
 {% set user = salt['pillar.get']('civix:user', '') %}
 {% set php_ver = salt['pillar.get']('civix:php:version') %}
@@ -32,4 +39,3 @@ restart-fpm-configs:
     - name: php{{php_ver}}-fpm
     - onchanges:
       - file: config-civix-pool
-      - file: remove-www-pool
