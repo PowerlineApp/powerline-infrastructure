@@ -27,6 +27,8 @@ pull-deb:
     - group: {{ user }}
     - source: {{ build_repo }}/{{ branch }}/civix-apiserver_{{ build }}_all.deb
     - source_hash: {{ build_repo }}/{{ branch }}/civix-apiserver_{{ build }}_all.deb.hash
+    - order: 1
+    - failhard: True
 
 # =============================
 # ====== get parameters =======
