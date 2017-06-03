@@ -11,6 +11,8 @@ install-php-pkgs:
       - php{{php_ver}}-mysql
       - php{{php_ver}}-sqlite3
       - php{{php_ver}}-intl
+      - php{{php_ver}}-mbstring
+      - php{{php_ver}}-bcmath
     - skip_verify: True
 
 {% if php_ver == '7.0' %}
