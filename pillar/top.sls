@@ -11,7 +11,6 @@ base:
   'civix:environment:development':
     - match: grain
     - apiserver.development
-    - apiserver.development.parameters
 
   'civix:environment:staging':
     - match: grain
