@@ -21,7 +21,7 @@ civix:
       amazon_s3.key:
       amazon_s3.secret:
       amazon_s3.region: us-east-1
-      amazon_s3.bucket: devpowerline
+      amazon_s3.bucket:
       amazon_s3.url:
       amazon_sns.android_arn: arn:aws:sns:eu-west-1:863632456175:app/GCM/powerline_android_debug
       amazon_sns.ios_arn: arn:aws:sns:eu-west-1:863632456175:app/APNS/powerline_ios_debug
@@ -30,7 +30,7 @@ civix:
       recaptcha_secure: false
       recaptcha_locale_key: kernel.default_locale
       recaptcha_enabled: true
-      cicero_login: aplotnikov
+      cicero_login:
       cicero_password:
       android_api_key:
       android_app:
@@ -51,7 +51,7 @@ civix:
       mailgun_public:
       mailgun_private:
       auto_invite_group_name: Powerline Powerusers
-      imgix.domain:  powerline-dev.imgix.net
+      imgix.domain:
       default_api_version: 1
       facebook_client_id:
       facebook_client_secret:
