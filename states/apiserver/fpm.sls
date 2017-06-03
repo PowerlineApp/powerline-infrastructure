@@ -25,17 +25,25 @@ config-civix-pool:
     - context:
         project: {{ project }}
 
+restart-fpm-configs:
+  service.running:
+    - name: php{{php_ver}}-fpm
+    - listen:
+      - file: config-civix-pool
+
 remove-www-pool:
   file.absent:
     - name: /etc/php/{{php_ver}}/fpm/pool.d/www.conf
+
+restart-fpm-configs:
+  service.running:
+    - name: php{{php_ver}}-fpm
+    - listen:
+      - file: remove-www-pool
 
 manage-fpm:
   service.running:
     - name: php{{php_ver}}-fpm
     - enable: True
 
-restart-fpm-configs:
-  service.running:
-    - name: php{{php_ver}}-fpm
-    - onchanges:
-      - file: config-civix-pool
+
