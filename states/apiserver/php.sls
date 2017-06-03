@@ -13,15 +13,6 @@ install-php-pkgs:
       - php{{php_ver}}-intl
       - php{{php_ver}}-mbstring
       - php{{php_ver}}-bcmath
-    - skip_verify: True
-
-{% if php_ver == '7.0' %}
-install-extra-php7-pkgs:
-  pkg.installed:
-    - pkgs:
-      - php{{php_ver}}-bcmath
       - php{{php_ver}}-xml
-      - php{{php_ver}}-mbstring
+      - php{{php_ver}}-zip
     - skip_verify: True
-
-{% endif %}
