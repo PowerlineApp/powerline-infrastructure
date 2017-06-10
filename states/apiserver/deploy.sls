@@ -49,21 +49,6 @@ get-parameters:
     - require:
       - file: pull-deb
 
-# =========================
-# ====== STOP SERVICES ====
-# =========================
-#stop-nginx-for-deploy:
-#  service.dead:
-#    - name: nginx
-#    - onchanges:
-#      - file: pull-deb
-
-#stop-fpm-for-deploy:
-#  service.dead:
-#    - name: php{{php_ver}}-fpm
-#    - onchanges:
-#      - file: pull-deb
-
 # ===========================
 # ====== Install latest =====
 # ===========================
