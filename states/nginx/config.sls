@@ -17,7 +17,7 @@ nginx-conf:
     - context:
         user: {{ project }}
 
-restart-nginx:
+restart-nginx-for-configs:
   service.running:
     - name: nginx
     - onchanges:

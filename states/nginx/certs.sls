@@ -27,6 +27,6 @@ nginx-deploy-server-crt:
 # Using listen to trigger a restart if and only if the config
 # runs were successful AND with changes. Since both would change
 # listen should punt to the end of the run for the restart
-restart-nginx:
+restart-nginx-for-certs:
   service.running:
     - name: nginx
