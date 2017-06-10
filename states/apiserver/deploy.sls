@@ -45,21 +45,24 @@ get-parameters:
     - group: {{ user }}
     - dataset_pillar: civix:symfony
     - formatter: yaml
+    - failhard: True
+    - require:
+      - file: pull-deb
 
 # =========================
 # ====== STOP SERVICES ====
 # =========================
-stop-nginx-for-deploy:
-  service.dead:
-    - name: nginx
-    - onchanges:
-      - file: pull-deb
+#stop-nginx-for-deploy:
+#  service.dead:
+#    - name: nginx
+#    - onchanges:
+#      - file: pull-deb
 
-stop-fpm-for-deploy:
-  service.dead:
-    - name: php{{php_ver}}-fpm
-    - onchanges:
-      - file: pull-deb
+#stop-fpm-for-deploy:
+#  service.dead:
+#    - name: php{{php_ver}}-fpm
+#    - onchanges:
+#      - file: pull-deb
 
 # ===========================
 # ====== Install latest =====
@@ -69,6 +72,7 @@ install-civix-build:
   pkg.installed:
     - sources:
       - civix-apiserver: /srv/civix-apiserver_{{ build }}_all.deb
+    - failhard: True
     - require:
       - file: pull-deb
 
@@ -95,6 +99,8 @@ change-build-dir-owner:
     - recurse:
       - user
       - group
+    - require:
+      - pkg: install-civix-build
 
 # fix the console perms
 console-perms:
@@ -104,20 +110,41 @@ console-perms:
     - user: {{ user }}
     - group: {{ user }}
     - require:
-      - pkg: install-civix-build
+      - file: link-in-new-build
+
+# Using cmd.run to run composer because the module never
+# seemed to pass correctly because of stderr that wasn't really
+# a problem
+{% set composer_opts = '' %}
+{% if env == 'prod' %}
+{%  set composer_opts = '--no-dev --optimize-autoloader' %}
+{% endif %}
+run-composer:
+  cmd.run:
+    - name: /usr/local/bin/composer -q install {{ composer_opts }}
+    - cwd: /srv/civix/apiserver
+    - runas: civix
+    - require:
       - file: link-in-new-build
 
 # =========================
 # ==== RESTART SERVICES ===
 # =========================
 
+# NOTE: Using watch so that the services
+#       will restart in specific order
+
 restart-nginx-for-deploy:
   service.running:
     - name: nginx
+    - watch:
+      - cmd: run-composer
 
 restart-fpm-for-deploy:
   service.running:
     - name: php{{php_ver}}-fpm
+    - watch:
+      - cmd: run-composer
 
 # =========================
 # ====== POST DEPLOY ======
@@ -129,7 +156,7 @@ warm-cache:
     - name: /srv/civix/apiserver/bin/console cache:warmup --env={{ env }}
     - runas: {{ user }}
     - require:
-      - pkg: install-civix-build
+      - file: link-in-new-build
 
 # Run migrations
 doctrine-migrations:
@@ -137,21 +164,28 @@ doctrine-migrations:
     - name: /srv/civix/apiserver/bin/console doctrine:migrations:migrate -n
     - runas: {{ user }}
     - require:
-      - pkg: install-civix-build
+      - file: link-in-new-build
+
+# ===== bounce queues =====
 
 bounce-supervisor-push-queue:
   supervisord.running:
     - name: civix_push_queue
     - restart: True
+    - watch:
+      - service: restart-nginx-for-deploy
 
 bounce-supervisor-payments:
   supervisord.running:
     - name: civix_payments
     - restart: True
+    - watch:
+      - service: restart-nginx-for-deploy
 
 # Add a release grain to the minion
 app-build-version:
   grains.present:
     - name: civix:build
     - value: {{ build }}
-
+    - require:
+      - file: link-in-new-build
