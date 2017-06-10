@@ -1,7 +1,9 @@
 {% set project = salt['pillar.get']('civix:project') %}
 {% set user = salt['pillar.get']('civix:user') %}
 {% set certs_dir = salt['pillar.get']('civix:certs_dir') %}
+{% set env = salt['pillar.get']('civix:environment') %}
 
+# This certs should be picked up from s3 ext pillar
 nginx-deploy-server-key:
   file.managed:
     - name: {{certs_dir}}/{{ project }}-server.key
