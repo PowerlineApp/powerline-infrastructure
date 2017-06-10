@@ -7,7 +7,7 @@
 nginx-deploy-server-key:
   file.managed:
     - name: {{certs_dir}}/{{ project }}-server.key
-    - source: salt://{{ env }}/certs/server.key
+    - source: salt://{{ env }}/certs/apiserver.key
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644
@@ -17,7 +17,7 @@ nginx-deploy-server-key:
 nginx-deploy-server-crt:
   file.managed:
     - name: {{certs_dir}}/{{ project }}-server.crt
-    - source: salt://{{ env }}/certs/server.crt
+    - source: salt://{{ env }}/certs/apiserver.crt
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644
