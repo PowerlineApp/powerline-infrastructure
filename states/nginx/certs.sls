@@ -12,7 +12,7 @@ nginx-deploy-server-key:
     - group: {{ user }}
     - mode: 644
     - listen:
-      - service: restart-nginx
+      - service: restart-nginx-for-certs
 
 nginx-deploy-server-crt:
   file.managed:
@@ -22,7 +22,7 @@ nginx-deploy-server-crt:
     - group: {{ user }}
     - mode: 644
     - listen:
-      - service: restart-nginx
+      - service: restart-nginx-for-certs
 
 # Using listen to trigger a restart if and only if the config
 # runs were successful AND with changes. Since both would change
