@@ -6,6 +6,7 @@ base:
   'civix:roles:apiserver':
     - match: grain
     - common
+    - nginx
     - apiserver
 
 # === Legacy section ====

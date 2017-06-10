@@ -2,7 +2,7 @@
 include:
   - .php
   - .fpm
-  - .nginx
+  - .nginx-vhost
   - .supervisor
   - .rabbitmq
 {% if salt['grains.get']('civix:environment') == 'vagrant' %}
