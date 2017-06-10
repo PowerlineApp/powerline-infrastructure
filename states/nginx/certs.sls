@@ -2,12 +2,13 @@
 {% set user = salt['pillar.get']('civix:user') %}
 {% set certs_dir = salt['pillar.get']('civix:certs_dir') %}
 {% set env = salt['pillar.get']('civix:environment') %}
+{% set cert_name = salt['pillar.get']('civix:cert_name') %}
 
 # This certs should be picked up from s3 ext pillar
 nginx-deploy-server-key:
   file.managed:
     - name: {{certs_dir}}/{{ project }}-server.key
-    - source: salt://{{ env }}/certs/apiserver.key
+    - source: salt://{{ env }}/certs/{{ cert_name }}.key
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644
@@ -17,7 +18,7 @@ nginx-deploy-server-key:
 nginx-deploy-server-crt:
   file.managed:
     - name: {{certs_dir}}/{{ project }}-server.crt
-    - source: salt://{{ env }}/certs/apiserver.crt
+    - source: salt://{{ env }}/certs/{{ cert_name }}.crt
     - user: {{ user }}
     - group: {{ user }}
     - mode: 644
