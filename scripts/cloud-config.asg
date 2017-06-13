@@ -1,4 +1,6 @@
 #cloud-config
+packages:
+ - git
 runcmd:
  - "INSTANCE_ID=$(wget -q -O - http://instance-data/latest/meta-data/instance-id)"
  - "echo pas-$INSTANCE_ID > /etc/hostname"
