@@ -22,6 +22,9 @@ base:
     - apiserver.production
     - apiserver.production.parameters
 
+  'jenkins':
+    - buildserver
+
 # === Legacy section ====
 # this will use /srv/powerline-legacy/salt
 
