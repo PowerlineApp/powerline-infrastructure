@@ -1,32 +1,8 @@
-base:
-  '*':
-    - common
-    - parameters
-
-  'civix:environment:vagrant':
-    - match: grain
-    - apiserver.vagrant
-    - apiserver.vagrant.parameters
-
-  'civix:environment:development':
-    - match: grain
-    - apiserver.development
-
-  'civix:environment:staging':
-    - match: grain
-    - apiserver.staging
-    - apiserver.staging.parameters
-
-  'civix:environment:production':
-    - match: grain
-    - apiserver.production
-    - apiserver.production.parameters
-
-  'jenkins':
-    - buildserver
-
-# === Legacy section ====
-# this will use /srv/powerline-legacy/salt
-
-  'civix-dev':
-    - legacy.rabbitmq
+dev:
+  'butler-api-*':
+    - salt.minion
+    - nginx
+    - node
+  'butler-db-*':
+    - salt.minion
+    - mongodb
