@@ -1,6 +1,3 @@
-base:
-  '*'
-    - salt.minion
 dev:
   'butler-api-*':
     - nginx
