@@ -1,14 +1,10 @@
 base:
-  '*':
-    - ntp
-    - cron
   'salt-master':
     - salt.master
-  'butler-*':
-    - salt-minion
-dev:
   'butler-api-*':
+    - salt.minion
     - nginx.ng
     - node
   'butler-db-*':
+    - salt.minion
     - mongo
